@@ -1,7 +1,9 @@
 # bigblobtest
 
 ```
-# make this new empty repo, then:
+#
+# On github: make this new empty repo, then:
+#
 
 mkdir ~/bigblobtest
 cd ~/bigblobtest
@@ -53,13 +55,37 @@ total 179472
 -rw-r--r--  1 ryan  staff    48M Nov  5 09:45 mini.iso
 -rw-r--r--  1 ryan  staff    40M Nov  5 09:45 netboot.tar
 
-cd ..
-du -csh bigblobtest
+du -csh ../bigblobtest
 124M    bigblobtest
 124M    total
 
-# delete branch on github
+#
+# On github:  delete branch in UI
+# (Could be done via command line if you want.)
+#
 
+# blobs are still in local .git
+
+git checkout main
+git branch -D bigblobbranch. # use -d if already merged
+
+du -csh ../bigblobtest
+ 73M    ../bigblobtest
+ 73M    total
+(base) ➜  bigblobtest git:(main) git branch
+* main
+
+# clean local blobs
+# (apparently this could have side effects for large repos like ours)
+# https://stackoverflow.com/a/2116892
+git reflog expire --all --expire=now
+git gc --prune=now --aggressive
+
+du -csh ../bigblobtest
+108K    ../bigblobtest
+108K    total
+
+cd ..
 rm -fr bigblobtest
 git clone git@github.com:timehaven/bigblobtest.git
 
